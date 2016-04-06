@@ -95,10 +95,20 @@ $(document).ready(function() {
   });
 
   socket.on('uporabniki', function(uporabniki) {
-    $('#seznam-uporabnikov').empty();
-    for (var i=0; i < uporabniki.length; i++) {
-      $('#seznam-uporabnikov').append(divElementEnostavniTekst(uporabniki[i]));
+    var $seznam = $('#seznam-uporabnikov');
+    var $poslji = $('#poslji-sporocilo');
+    $seznam.empty();
+    
+    function klik() {
+      $poslji.val('/zasebno "' + $(this).html() + '" ').focus();
     }
+    
+    uporabniki = uporabniki.map(divElementEnostavniTekst);
+    uporabniki.forEach(function(el) {
+      el.on('click', klik);
+      $seznam.append(el);
+    });
+    
   });
 
   setInterval(function() {
