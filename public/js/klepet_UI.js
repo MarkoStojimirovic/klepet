@@ -1,11 +1,25 @@
 function divElementEnostavniTekst(sporocilo) {
-  var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
-  if (jeSmesko) {
-    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;', 'png\' />');
-    return $('<div style="font-weight: bold"></div>').html(sporocilo);
+  var poprSporocilo = preveriSmeska(sporocilo);
+  poprSporocilo = preveriSliko(poprSporocilo);
+  
+  if (sporocilo != poprSporocilo) {
+    return $('<div style="font-weight: bold"></div>').html(poprSporocilo);
   } else {
-    return $('<div style="font-weight: bold;"></div>').text(sporocilo);
+    return $('<div style="font-weight: bold"></div>').text(sporocilo);
   }
+}
+
+function preveriSmeska(sporocilo) {
+  var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
+    
+  if (jeSmesko) {
+    return sporocilo.replace(/\</g,'&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;','png\' />');
+  }
+  return sporocilo;
+}
+      
+function preveriSliko(sporocilo) {
+  return sporocilo.replace(/(https?:\/\/[^\s]*\.(?:jpg|png|gif))/gi, '<img src="$1" width="200" style="padding-left: 20px;"/>');
 }
 
 function divElementHtmlTekst(sporocilo) {
