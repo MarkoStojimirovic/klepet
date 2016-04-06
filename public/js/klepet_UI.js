@@ -1,6 +1,7 @@
 function divElementEnostavniTekst(sporocilo) {
   var poprSporocilo = preveriSmeska(sporocilo);
   poprSporocilo = preveriSliko(poprSporocilo);
+  poprSporocilo = preveriVideo(poprSporocilo);
   
   if (sporocilo != poprSporocilo) {
     return $('<div style="font-weight: bold"></div>').html(poprSporocilo);
@@ -75,6 +76,7 @@ function filtirirajVulgarneBesede(vhod) {
 
 $(document).ready(function() {
   var klepetApp = new Klepet(socket);
+  $('#vsebina').jrumble();
 
   socket.on('vzdevekSpremembaOdgovor', function(rezultat) {
     var sporocilo;
@@ -130,6 +132,14 @@ $(document).ready(function() {
       $seznam.append(el);
     });
     
+  });
+  
+  socket.on('dregljaj', function() {
+    console.log($('#vsebina').jrumble());
+    $('#vsebina').trigger('startRumble');
+    setTimeout(function() {
+      $('#vsebina').trigger('stopRumble');
+    }, 1500);
   });
 
   setInterval(function() {
