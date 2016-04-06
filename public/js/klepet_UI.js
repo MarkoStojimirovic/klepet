@@ -26,6 +26,13 @@ function divElementHtmlTekst(sporocilo) {
   return $('<div></div>').html('<i>' + sporocilo + '</i>');
 }
 
+function preveriVideo(sporocilo) {
+  var youtubeHTML = '<iframe src="https://www.youtube.com/embed/$1" allowfullscreen width="200px" height="150px" style="margin-left: 20px;"></iframe>';
+  var youtubeReg = /https:\/\/www\.youtube\.com\/watch\?v=([^\s]+)/gi;
+  
+  return sporocilo.replace(youtubeReg, youtubeHTML);
+}
+
 function procesirajVnosUporabnika(klepetApp, socket) {
   var sporocilo = $('#poslji-sporocilo').val();
   sporocilo = dodajSmeske(sporocilo);
